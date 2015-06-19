@@ -1,0 +1,1 @@
+This file contains android client side code.
