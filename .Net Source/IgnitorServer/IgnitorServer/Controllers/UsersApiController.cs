@@ -1,15 +1,22 @@
-﻿using IgnitorServer.Models;
+﻿using DBHandler.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-
+using DBHandler;
 namespace IgnitorServer.Controllers
 {
     public class UsersApiController : ApiController
     {
+        DBClass dbObject = null;
+
+        public UsersApiController()
+        {
+            dbObject = new DBClass();
+        }
+
         UserModel[] userModel = new UserModel[] 
         { 
             new UserModel { Username="vijay",Password="vijay",Email="vijay",Mobile="9727566147",Token="vijay"},
@@ -21,7 +28,7 @@ namespace IgnitorServer.Controllers
         [Route("ValidateUser")]
         public UserModel ValidateUser([FromBody]UserModel userModel)
         {
-            userModel.Token = userModel.Token + "server";
+            dbObject.ValidateUser(userModel);
             return userModel;
         }
     }

@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using IgnitorServer.Controllers;
-using IgnitorServer.Models;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Routing;
+using DBHandler.Entities;
 namespace IgnitorTester
 {
     [TestClass]
@@ -52,7 +52,7 @@ namespace IgnitorTester
         [TestMethod]
         public void UserApiTester()
         {
-            var UserApi = new UsersApiController();
+           var UserApi = new UsersApiController();
 
             var userModel = new UserModel();
             userModel.Username = "vijay";

@@ -67,6 +67,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DBHandler\DBHandler.csproj">
+      <Project>{d8297dd3-4e20-4c51-a003-32dd645eb59c}</Project>
+      <Name>DBHandler</Name>
+    </ProjectReference>
     <ProjectReference Include="..\IgnitorServer\IgnitorServer.csproj">
       <Project>{22a583a5-044f-48f3-853c-68958dcee495}</Project>
       <Name>IgnitorServer</Name>
