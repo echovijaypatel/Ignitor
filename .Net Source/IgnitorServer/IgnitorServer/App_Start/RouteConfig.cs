@@ -15,7 +15,7 @@ namespace IgnitorServer
 
             routes.MapRoute(
                 name: "IgnitorApi",
-                url: "api/{controller}/{id}",
+                url: "api/{controller}/{action}/{id}",
                 defaults: new {id = UrlParameter.Optional }
             );
         }
