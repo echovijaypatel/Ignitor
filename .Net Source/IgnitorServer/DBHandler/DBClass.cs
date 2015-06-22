@@ -16,43 +16,67 @@ namespace DBHandler
         public DBClass()
         {
             //Todo : set this out
-            //ConnectionString = ConfigurationManager.ConnectionStrings["IgnitorDBConnectionString"].ConnectionString;
-            ConnectionString = "Data Source=STARKPC;Initial Catalog=IgnitorDB;Integrated Security=True";
+            ConnectionString = ConfigurationManager.ConnectionStrings["IgnitorDBConnectionString"].ConnectionString;
+            //ConnectionString = "Data Source=STARKPC;Initial Catalog=IgnitorDB;Integrated Security=True";
         }
 
         public UserModel ValidateUser(UserModel userModel)
         {
             try
             {
-                using(SqlConnection sqlCon = new SqlConnection(ConnectionString))
+                using(SqlConnection sqlConnection = new SqlConnection(ConnectionString))
                 {
-                    using (SqlCommand sqlCmd = new SqlCommand("validate_user", sqlCon))
+                    using (SqlCommand sqlCommand = new SqlCommand("validate_user", sqlConnection))
                     {
-                        sqlCmd.CommandType = CommandType.StoredProcedure;
-                        sqlCmd.Parameters.Add(new SqlParameter("@username", userModel.Username));
-                        sqlCmd.Parameters.Add(new SqlParameter("@password", userModel.Password));
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.Add(new SqlParameter("@username", userModel.Username));
+                        sqlCommand.Parameters.Add(new SqlParameter("@password", userModel.Password));
 
-                        sqlCon.Open();
-                        using (SqlDataReader sqlReader = sqlCmd.ExecuteReader())
+                        sqlConnection.Open();
+                        using (SqlDataReader sqlDataReader = sqlCommand.ExecuteReader())
                         {
-                            while (sqlReader.Read())
+                            while (sqlDataReader.Read())
                             {
-                                userModel.Username = Convert.ToString(sqlReader["username"]);
-                                userModel.Password = Convert.ToString(sqlReader["password"]);
-                                userModel.Mobile = Convert.ToString(sqlReader["mobile"]);
-                                userModel.Email = Convert.ToString(sqlReader["email"]);
-                                userModel.Token = Convert.ToString(sqlReader["token"]);
+                                userModel.Username = Convert.ToString(sqlDataReader["username"]);
+                                userModel.Password = Convert.ToString(sqlDataReader["password"]);
+                                userModel.Mobile = Convert.ToString(sqlDataReader["mobile"]);
+                                userModel.Email = Convert.ToString(sqlDataReader["email"]);
+                                userModel.Token = Convert.ToString(sqlDataReader["token"]);
                             }
                         }
-                        sqlCon.Close();
+                        sqlConnection.Close();
                     }
                 }
             }
-            catch (Exception ex)
+             catch (Exception exception)
             {
                 throw;
             }
+            userModel.Password = "";
             return userModel;
+        }
+
+        public int TotalUser()
+        {
+            int TotalUser=0;
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                {
+                    using (SqlCommand sqlCommand = new SqlCommand("total_user", sqlConnection))
+                    {
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlConnection.Open();
+                        TotalUser = Convert.ToInt32(sqlCommand.ExecuteScalar());
+                        sqlConnection.Close();
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                throw;
+            }
+            return TotalUser;
         }
     }
 }
