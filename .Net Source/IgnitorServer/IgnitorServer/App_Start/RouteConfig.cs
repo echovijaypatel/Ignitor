@@ -14,7 +14,7 @@ namespace IgnitorServer
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default Api",
+                name: "IgnitorApi",
                 url: "api/{controller}/{action}/{id}",
                 defaults: new {id = UrlParameter.Optional }
             );

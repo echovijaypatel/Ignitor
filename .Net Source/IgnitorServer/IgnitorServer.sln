@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IgnitorServer", "IgnitorServer\IgnitorServer.csproj", "{22A583A5-044F-48F3-853C-68958DCEE495}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IgnitorTester", "IgnitorTester\IgnitorTester.csproj", "{2E4268FE-8457-484F-9913-D67DBF4B6FB1}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBHandler", "DBHandler\DBHandler.csproj", "{D8297DD3-4E20-4C51-A003-32DD645EB59C}"
 EndProject
 Global
@@ -17,6 +19,10 @@ Global
 		{22A583A5-044F-48F3-853C-68958DCEE495}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22A583A5-044F-48F3-853C-68958DCEE495}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22A583A5-044F-48F3-853C-68958DCEE495}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E4268FE-8457-484F-9913-D67DBF4B6FB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E4268FE-8457-484F-9913-D67DBF4B6FB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E4268FE-8457-484F-9913-D67DBF4B6FB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E4268FE-8457-484F-9913-D67DBF4B6FB1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D8297DD3-4E20-4C51-A003-32DD645EB59C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D8297DD3-4E20-4C51-A003-32DD645EB59C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8297DD3-4E20-4C51-A003-32DD645EB59C}.Release|Any CPU.ActiveCfg = Release|Any CPU
