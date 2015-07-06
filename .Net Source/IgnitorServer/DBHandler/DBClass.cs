@@ -16,33 +16,86 @@ namespace DBHandler
         public DBClass()
         {
             //Todo : set this out
-            //ConnectionString = ConfigurationManager.ConnectionStrings["IgnitorDBConnectionString"].ConnectionString;
-            ConnectionString = "Data Source=STARKPC;Initial Catalog=IgnitorDB;Integrated Security=True";
+            ConnectionString = ConfigurationManager.ConnectionStrings["IgnitorDBConnectionString"].ConnectionString;
+            //ConnectionString = "Data Source=STARKPC;Initial Catalog=IgnitorDB;Integrated Security=True";
         }
 
         public UserModel ValidateUser(UserModel userModel)
         {
             try
             {
-                using(SqlConnection sqlCon = new SqlConnection(ConnectionString))
+                using(SqlConnection sqlConnection = new SqlConnection(ConnectionString))
                 {
-                    using (SqlCommand sqlCmd = new SqlCommand("validate_user", sqlCon))
+                    using (SqlCommand sqlCommand = new SqlCommand("ig_validate_user", sqlConnection))
                     {
-                        sqlCmd.CommandType = CommandType.StoredProcedure;
-                        sqlCmd.Parameters.Add(new SqlParameter("@username", userModel.Username));
-                        sqlCmd.Parameters.Add(new SqlParameter("@password", userModel.Password));
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.Add(new SqlParameter("@username", userModel.Username));
+                        sqlCommand.Parameters.Add(new SqlParameter("@password", userModel.Password));
 
-                        sqlCon.Open();
-                        using (SqlDataReader sqlReader = sqlCmd.ExecuteReader())
+                        sqlConnection.Open();
+                        using (SqlDataReader sqlDataReader = sqlCommand.ExecuteReader())
                         {
-                            while (sqlReader.Read())
+                            while (sqlDataReader.Read())
                             {
-                                userModel.Username = Convert.ToString(sqlReader["username"]);
-                                userModel.Password = Convert.ToString(sqlReader["password"]);
-                                userModel.Mobile = Convert.ToString(sqlReader["mobile"]);
-                                userModel.Email = Convert.ToString(sqlReader["email"]);
-                                userModel.Token = Convert.ToString(sqlReader["token"]);
+                                userModel.Username = Convert.ToString(sqlDataReader["username"]);
+                                userModel.Password = Convert.ToString(sqlDataReader["password"]);
+                                userModel.Mobile = Convert.ToString(sqlDataReader["mobile"]);
+                                userModel.Email = Convert.ToString(sqlDataReader["email"]);
+                                userModel.Token = Convert.ToString(sqlDataReader["token"]);
                             }
+                        }
+                        sqlConnection.Close();
+                    }
+                }
+            }
+             catch (Exception exception)
+            {
+                throw;
+            }
+            userModel.Password = "";
+            return userModel;
+        }
+
+        public int TotalUser()
+        {
+            int TotalUser=0;
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                {
+                    using (SqlCommand sqlCommand = new SqlCommand("ig_total_user", sqlConnection))
+                    {
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlConnection.Open();
+                        TotalUser = Convert.ToInt32(sqlCommand.ExecuteScalar());
+                        sqlConnection.Close();
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                throw;
+            }
+            return TotalUser;
+        }
+
+        public List<SendQuotesModel> GetAllQuotes()
+        {
+            List<SendQuotesModel> QuotesList = new List<SendQuotesModel>();
+            try
+            {
+                using (SqlConnection sqlCon = new SqlConnection(ConnectionString))
+                {
+                    using (SqlCommand sqlCommand = new SqlCommand("ig_crud_quotes", sqlCon))
+                    {
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.Add(new SqlParameter("@id", 1));
+                        sqlCommand.Parameters.Add(new SqlParameter("@StatementType", "selectall"));
+                        sqlCon.Open();
+                        SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+                        while (sqlDataReader.Read())
+                        {
+                            QuotesList.Add(new SendQuotesModel { Id = Convert.ToInt32(sqlDataReader["Id"]), QuoteText = sqlDataReader["QuoteText"].ToString(), QouteAuthor = (string)sqlDataReader["QuoteAuthor"].ToString(), CategoryId = Convert.ToInt32(sqlDataReader["CategoryId"]), Category = sqlDataReader["CategoryName"].ToString() });
                         }
                         sqlCon.Close();
                     }
@@ -50,9 +103,37 @@ namespace DBHandler
             }
             catch (Exception ex)
             {
-                throw;
+                // LogUtility.Error("cUserDbHandler.cs", "ValidateUser_DA", ex.Message, ex);
             }
-            return userModel;
+            return QuotesList;
+        }
+
+        public void SetPhotoOnFriendMobile(ReceivePhotoModel receivePhotoModel)
+        {
+            try
+            {
+                using (SqlConnection sqlCon = new SqlConnection(ConnectionString))
+                {
+                    using (SqlCommand sqlCommand = new SqlCommand("ig_crud_quotes", sqlCon))
+                    {
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.Add(new SqlParameter("@id", 1));
+                        sqlCommand.Parameters.Add(new SqlParameter("@StatementType", "selectall"));
+                        sqlCon.Open();
+                        SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+                        //while (sqlDataReader.Read())
+                        //{
+                        //    QuotesList.Add(new SendQuotesModel { Id = Convert.ToInt32(sqlDataReader["Id"]), QuoteText = sqlDataReader["QuoteText"].ToString(), QouteAuthor = (string)sqlDataReader["QuoteAuthor"].ToString(), CategoryId = Convert.ToInt32(sqlDataReader["CategoryId"]), Category = sqlDataReader["CategoryName"].ToString() });
+                        //}
+                        sqlCon.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // LogUtility.Error("cUserDbHandler.cs", "ValidateUser_DA", ex.Message, ex);
+            }
+           // return QuotesList;
         }
     }
 }

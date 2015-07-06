@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Ignitor WebApi Tester</title>
+    <script src="Temp/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var user = {
+            "Username": "vijay",
+            "Password": "vijay",
+        };
+
+        function GetTotalUsers() {
+            $.ajax({
+                //url: 'http://localhost:5151/api/userapi/totalusers',
+                url: 'http://www.echovijaypatel.com/Ignitor/api/UserApi/TotalUsers',
+                type: 'POST',
+                dataType: 'json',
+                success: function (data) {
+                    debugger;
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+        }
+
+        function ValidateUser() {
+            $.ajax({
+                //url: 'http://localhost:5151/api/userapi/ValidateUser',
+                url: 'http://www.echovijaypatel.com/Ignitor/api/UserApi/ValidateUser',
+                type: 'POST',
+                dataType: 'json',
+                data: user,
+                success: function (data) {
+                    debugger;
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+        }
+
+
+        function GetAllQuotes() {
+            $.ajax({
+              //  url: 'http://localhost:5151/api/quotesapi/GetAllQuotes',
+                  url: 'http://www.echovijaypatel.com/Ignitor/api/quotesapi/GetAllQuotes',
+                type: 'POST',
+                dataType: 'json',
+                data: user,
+                success: function (data) {
+                    debugger;
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+        }
+
+
+
+
+    </script>
+</head>
+<body>
+    <button onclick="ValidateUser()">Validate</button>
+    <button onclick="GetTotalUsers()">GetTotalUsers</button>
+    <button onclick="GetAllQuotes()">GetAllQuotes</button>
+</body>
+</html>
